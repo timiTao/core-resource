@@ -1,0 +1,16 @@
+{
+    "name": "timitao/core-resource",
+    "description": "Core resource resource type",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "version": "v0.0.1",
+    "time": "2014-06-22",
+    "authors": [
+        {
+            "name": "Tomasz Kunicki",
+            "email": "kunicki.tomasz@gmail.com",
+            "homepage": "http://tomaszkunicki.pl",
+            "role": "developer"
+        }
+    ]
+}
