@@ -13,7 +13,7 @@ use TimiTao\Core\Resource\ResourceInterface;
  *
  * @package TimiTao\Core\Resource\Collection
  */
-class ResourceCollection extends \ArrayObject implements ResourceCollectionInterface
+class Collection extends \ArrayObject implements CollectionInterface
 {
 
     /**
@@ -23,10 +23,7 @@ class ResourceCollection extends \ArrayObject implements ResourceCollectionInter
      */
     public function add(ResourceInterface $resource)
     {
-        if ($this->has($resource)) {
-            return;
-        }
-        $this->offsetSet($resource->getResourceID(), $resource);
+        $this->append($resource);
     }
 
     /**
@@ -40,9 +37,16 @@ class ResourceCollection extends \ArrayObject implements ResourceCollectionInter
     {
         if (!$this->has($resource)) {
             $this->add($resource);
-        }
 
-        $this->offsetSet($resource->getResourceID(), $resource);
+            return;
+        }
+        foreach ($this as $key => $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                $this->offsetSet($key, $resource);
+            }
+        }
     }
 
     /**
@@ -53,7 +57,16 @@ class ResourceCollection extends \ArrayObject implements ResourceCollectionInter
      */
     public function has(ResourceInterface $resource)
     {
-        return $this->offsetExists($resource->getResourceID());
+        /** @var ResourceInterface $listElement */
+        foreach ($this as $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -63,7 +76,13 @@ class ResourceCollection extends \ArrayObject implements ResourceCollectionInter
      */
     public function delete(ResourceInterface $resource)
     {
-        $this->offsetUnset($resource->getResourceID());
+        foreach ($this as $key => $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                $this->offsetUnset($key);
+            }
+        }
     }
 
     /**

@@ -9,13 +9,11 @@ namespace TimiTao\Core\Resource\Collection;
 use TimiTao\Core\Resource\ResourceInterface;
 
 /**
- * Class TypCollection
- *
- * Contain 1 type of resource
+ * Class ResourceCollection
  *
  * @package TimiTao\Core\Resource\Collection
  */
-class TypCollection extends \ArrayObject implements CollectionInterface
+class IdCollection extends \ArrayObject implements CollectionInterface
 {
 
     /**
@@ -28,7 +26,7 @@ class TypCollection extends \ArrayObject implements CollectionInterface
         if ($this->has($resource)) {
             return;
         }
-        $this->offsetSet($resource->getResourceType(), $resource);
+        $this->offsetSet($resource->getResourceID(), $resource);
     }
 
     /**
@@ -44,7 +42,7 @@ class TypCollection extends \ArrayObject implements CollectionInterface
             $this->add($resource);
         }
 
-        $this->offsetSet($resource->getResourceType(), $resource);
+        $this->offsetSet($resource->getResourceID(), $resource);
     }
 
     /**
@@ -55,7 +53,7 @@ class TypCollection extends \ArrayObject implements CollectionInterface
      */
     public function has(ResourceInterface $resource)
     {
-        return $this->offsetExists($resource->getResourceType());
+        return $this->offsetExists($resource->getResourceID());
     }
 
     /**
@@ -65,7 +63,7 @@ class TypCollection extends \ArrayObject implements CollectionInterface
      */
     public function delete(ResourceInterface $resource)
     {
-        $this->offsetUnset($resource->getResourceType());
+        $this->offsetUnset($resource->getResourceID());
     }
 
     /**

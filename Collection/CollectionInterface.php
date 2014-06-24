@@ -12,7 +12,7 @@ use TimiTao\Core\Resource\ResourceInterface;
  *
  * @package TimiTao\Core\Resource\Collection
  */
-interface ResourceCollectionInterface
+interface CollectionInterface
 {
     /**
      * Delete resource from collection
