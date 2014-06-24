@@ -23,10 +23,7 @@ class Collection extends \ArrayObject implements CollectionInterface
      */
     public function add(ResourceInterface $resource)
     {
-        if ($this->has($resource)) {
-            return;
-        }
-        $this->offsetSet($resource->getResourceID(), $resource);
+        $this->append($resource);
     }
 
     /**
@@ -40,9 +37,16 @@ class Collection extends \ArrayObject implements CollectionInterface
     {
         if (!$this->has($resource)) {
             $this->add($resource);
-        }
 
-        $this->offsetSet($resource->getResourceID(), $resource);
+            return;
+        }
+        foreach ($this as $key => $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                $this->offsetSet($key, $resource);
+            }
+        }
     }
 
     /**
@@ -53,7 +57,16 @@ class Collection extends \ArrayObject implements CollectionInterface
      */
     public function has(ResourceInterface $resource)
     {
-        return $this->offsetExists($resource->getResourceID());
+        /** @var ResourceInterface $listElement */
+        foreach ($this as $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -63,7 +76,13 @@ class Collection extends \ArrayObject implements CollectionInterface
      */
     public function delete(ResourceInterface $resource)
     {
-        $this->offsetUnset($resource->getResourceID());
+        foreach ($this as $key => $listElement) {
+            $sameID = $listElement->getResourceID() == $resource->getResourceID();
+            $sameType = $listElement->getResourceType() == $resource->getResourceType();
+            if ($sameID && $sameType) {
+                $this->offsetUnset($key);
+            }
+        }
     }
 
     /**
