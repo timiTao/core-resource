@@ -13,7 +13,7 @@ use TimiTao\Core\Resource\ResourceInterface;
  *
  * @package TimiTao\Core\Resource\Collection
  */
-class ResourceCollection extends \ArrayObject implements ResourceCollectionInterface
+class Collection extends \ArrayObject implements CollectionInterface
 {
 
     /**
