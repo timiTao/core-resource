@@ -6,6 +6,7 @@
 
 namespace TimiTao\Core\Resource\Collection;
 
+use TimiTao\Core\Resource\Exception\NotExistsResourceException;
 use TimiTao\Core\Resource\ResourceInterface;
 
 /**
@@ -40,6 +41,7 @@ class Collection extends \ArrayObject implements CollectionInterface
 
             return;
         }
+        /** @var ResourceInterface $listElement */
         foreach ($this as $key => $listElement) {
             $sameID = $listElement->getResourceID() == $resource->getResourceID();
             $sameType = $listElement->getResourceType() == $resource->getResourceType();
@@ -76,12 +78,18 @@ class Collection extends \ArrayObject implements CollectionInterface
      */
     public function delete(ResourceInterface $resource)
     {
+        $keys = array();
+        /** @var ResourceInterface $listElement */
         foreach ($this as $key => $listElement) {
             $sameID = $listElement->getResourceID() == $resource->getResourceID();
             $sameType = $listElement->getResourceType() == $resource->getResourceType();
             if ($sameID && $sameType) {
-                $this->offsetUnset($key);
+                $keys[] = $key;
             }
+        }
+
+        foreach ($keys as $key) {
+            $this->offsetUnset($key);
         }
     }
 
@@ -90,9 +98,14 @@ class Collection extends \ArrayObject implements CollectionInterface
      *
      * @param string $key
      * @return ResourceInterface
+     * @throws \TimiTao\Core\Resource\Exception\NotExistsResourceException
      */
     public function get($key)
     {
+        if (!$this->offsetExists($key)) {
+            throw new NotExistsResourceException();
+        }
+
         return $this->offsetGet($key);
     }
 } 

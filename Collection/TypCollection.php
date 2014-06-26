@@ -6,6 +6,7 @@
 
 namespace TimiTao\Core\Resource\Collection;
 
+use TimiTao\Core\Resource\Exception\NotExistsResourceException;
 use TimiTao\Core\Resource\ResourceInterface;
 
 /**
@@ -65,6 +66,9 @@ class TypCollection extends \ArrayObject implements CollectionInterface
      */
     public function delete(ResourceInterface $resource)
     {
+        if (!$this->has($resource)) {
+            return;
+        }
         $this->offsetUnset($resource->getResourceType());
     }
 
@@ -73,9 +77,14 @@ class TypCollection extends \ArrayObject implements CollectionInterface
      *
      * @param string $key
      * @return ResourceInterface
+     * @throws NotExistsResourceException
      */
     public function get($key)
     {
+        if (!$this->offsetExists($key)) {
+            throw new NotExistsResourceException();
+        }
+
         return $this->offsetGet($key);
     }
 } 
