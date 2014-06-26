@@ -5,6 +5,7 @@
  */
 namespace TimiTao\Core\Resource\Collection;
 
+use TimiTao\Core\Resource\Exception\NotExistsResourceException;
 use TimiTao\Core\Resource\ResourceInterface;
 
 /**
@@ -50,6 +51,7 @@ interface CollectionInterface
      *
      * @param string $key
      * @return ResourceInterface
+     * @throws NotExistsResourceException
      */
     public function get($key);
 }

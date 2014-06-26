@@ -20,7 +20,9 @@
         "classmap": [
             "Resource.php",
             "ResourceInterface.php",
-            "Collection/"
+            "Collection/",
+            "Tests/",
+            "Exception/"
         ]
     }
 
