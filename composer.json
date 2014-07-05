@@ -16,14 +16,11 @@
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
     },
-    "autoload-dev": {
-        "classmap": [
-            "Resource.php",
-            "ResourceInterface.php",
-            "Collection/",
-            "Tests/",
-            "Exception/"
-        ]
+    "autoload": {
+        "psr-0": {
+            "TimiTao\\": "src/"
+        }
+
     }
 
 }

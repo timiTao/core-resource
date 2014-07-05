@@ -8,6 +8,7 @@
 namespace TimiTao\Core\Resource\Tests;
 
 use TimiTao\Core\Resource\Collection\Collection;
+use TimiTao\Core\Resource\Tests\TraitBaseTestCollection;
 
 /**
  * Class ResourceCollectionTest
